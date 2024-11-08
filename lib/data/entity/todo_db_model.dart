@@ -6,6 +6,7 @@ part 'todo_db_model.g.dart';
 
 @collection
 class TodoDbModel {
+  //DB에서 가져오는 모델 데이터, DTO라고 해도 상관없다.
   Id id;
 
   @Index(type: IndexType.value)

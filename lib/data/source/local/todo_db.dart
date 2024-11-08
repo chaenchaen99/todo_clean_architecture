@@ -7,20 +7,24 @@ import '../../../common/util/simple_result.dart';
 import 'error/local_db_error.dart';
 
 /// TodoDAO
+/// 애플리케이션에서 DB와의 직접적인 데이터 접근을 담당하는 클래스
 class TodoDB {
   static late final Isar _isar;
 
   static Future<void> init() async {
     final dir = await getApplicationDocumentsDirectory();
-    _isar = await Isar.open([TodoDbModelSchema], maxSizeMiB: 512, directory: dir.path);
+    _isar = await Isar.open([TodoDbModelSchema],
+        maxSizeMiB: 512, directory: dir.path);
   }
 
   Future<SimpleResult<List<TodoDbModel>, LocalDBError>> getTodoList() async {
     try {
-      final documents = await _isar.todoDbModels.filter().idGreaterThan(0).findAll();
+      final documents =
+          await _isar.todoDbModels.filter().idGreaterThan(0).findAll();
       return SimpleResult.success(documents);
     } catch (e) {
-      return SimpleResult.failure(LocalDBError(LocalDBErrorType.unknown, '에러가 발생했습니다. catch를 통해 세분화된 에러를 넘겨주세요.'));
+      return SimpleResult.failure(LocalDBError(
+          LocalDBErrorType.unknown, '에러가 발생했습니다. catch를 통해 세분화된 에러를 넘겨주세요.'));
     }
   }
 
